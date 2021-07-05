@@ -1,0 +1,34 @@
+﻿@model CollectiveModel
+
+@{
+    ViewData["Title"] = "Edit Group Name";
+}
+<div style="padding-top:30px;">
+    <h4>@ViewData["Title"]</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <input asp-for="Id" type="hidden" />
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter group name." name="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+    <div>
+        <a asp-action="ExpensesList" asp-route-id="@Model.Id">Back to Group</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

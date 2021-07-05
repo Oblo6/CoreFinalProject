@@ -1,0 +1,114 @@
+﻿@model ExpensesReportAjaxIndexViewModel
+
+@{
+    ViewData["Title"] = "Expenses Report";
+}
+<div style="padding-top:15px;">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-2">
+            @await Component.InvokeAsync("Collectives", Model.ExpensesFilter.CollectiveId)
+        </div>
+        <div class="col-10">
+            <h5>All Expenses</h5>
+            <hr />
+
+            <form asp-action="Index" autocomplete="off" id="form" data-ajax="true" data-ajax-method="post" data-ajax-mode="replacewith" data-ajax-update="#expensesreport">
+                <input asp-for="ExpensesFilter.CollectiveId" type="hidden" />
+                <div class="row">
+                    <div class="col-2">
+                        <label asp-for="ExpensesFilter.ExpenseDescription"></label>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="ExpensesFilter.ExpenseDescription" class="form-control" />
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="ExpensesFilter.UserName"></label>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="ExpensesFilter.UserName" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 30px;">
+                    <div class="col-2">
+                        <label asp-for="ExpensesFilter.CostBeginText"></label>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <input asp-for="ExpensesFilter.CostBeginText" class="form-control" />
+                            <span class="input-group-text">-</span>
+                            <input asp-for="ExpensesFilter.CostEndText" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="ExpensesFilter.PayDateBeginText"></label>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <input asp-for="ExpensesFilter.PayDateBeginText" class="form-control expiration-date" />
+                            <span class="input-group-text">-</span>
+                            <input asp-for="ExpensesFilter.PayDateEndText" class="form-control expiration-date" />
+                        </div>
+                    </div>
+                </div>                
+                <div class="row" style="padding-top: 30px;">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary" id="search"><i class="fas fa-search"></i> Search</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a asp-action="Index" class="btn btn-info"><i class="fas fa-sync"></i> Clear</a>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div id="expensesreport">
+                    <partial name="_ExpensesReport" model="Model" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <link href="~/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+    <script src="~/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.pay-date').datepicker({
+                todayBtn: "linked",
+                clearBtn: true,
+                orientation: "bottom auto",
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $("#search").click(function () {
+                $("#pagenumber").val("1");
+            });
+
+            $(document).on("change", "#pagenumber", function () {
+                $("#form").submit();
+            });
+
+            $(document).on("click", ".orderbyexpressionlink", function (event) {
+                event.preventDefault();
+                $("#orderbyexpressioninput").val($(this).text());
+                var ascending = $("#orderbydirectioninput").val();
+                if (ascending === "True") {
+                    ascending = "False";
+                } else {
+                    ascending = "True";
+                }
+                $("#orderbydirectioninput").val(ascending);
+                $("#form").submit();
+            });
+
+        });
+    </script>
+}

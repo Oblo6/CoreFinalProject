@@ -1,0 +1,36 @@
+﻿@model List<CollectiveModel>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h5>Collectives</h5>
+    <hr />
+    <ul class="navbar-nav ul-collectives">
+        @if (ViewBag.CollectiveId == null)
+        {
+            <li class="active">
+                <a asp-action="Index" asp-controller="ExpensesReportAjax">All Collectives</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a asp-action="Index" asp-controller="ExpensesReportAjax">All Collectives</a>
+            </li>
+        }
+        @foreach (var collective in Model)
+        {
+            @if (ViewBag.CollectiveId != null && Convert.ToInt32(ViewBag.CollectiveId) == collective.Id)
+            {
+                <li class="active">
+                    <a asp-action="Index" asp-controller="ExpensesReportAjax" asp-route-collectiveId="@collective.Id">@collective.Name</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a asp-action="Index" asp-controller="ExpensesReportAjax" asp-route-collectiveId="@collective.Id">@collective.Name</a>
+                </li>
+            }
+        }
+    </ul>
+}

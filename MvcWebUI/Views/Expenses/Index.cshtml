@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ExpenseModel>
+
+@{
+    ViewData["Title"] = "My Expenses";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="CreateExp" asp-controller="Expenses"> Add Expense</a>
+</p>
+<table id="expenses" class="display" style="width:100%;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CollectiveName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollectiveName)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Expenses" asp-route-id="@item.Id"><i class="fas fa-lg fa-info-circle"></i> Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @:&nbsp;|&nbsp;
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-lg fa-pen-square"></i> Edit</a>
+                        @:&nbsp;|&nbsp;
+                        <a href="#" onclick="deleteExpense(@item.Id);"><i class="fas fa-lg fa-trash"></i> Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/datatables.js"></script>
+    <link href="~/lib/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script>
+        $(function () {
+            BindDataTable("expenses");
+        });
+        function deleteExpense(id) {
+            alertify.confirm("Warning!",
+                "Are you sure do you want to delete this expense?",
+                function () {
+                    window.location.href = "/Expenses/Delete/" + id;
+                },
+                function () {
+                    alertify.error("Delete canceled.");
+                }
+            );
+        }
+    </script>
+}

@@ -1,0 +1,160 @@
+﻿@model ExpensesReportAjaxIndexViewModel
+
+<div class="row" style="padding-bottom: 15px;">
+    <div class="col-2">
+        <select asp-for="PageNumber" asp-items="Model.Pages" class="form-control" id="pagenumber"></select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @if (Model.ExpensesReport != null && Model.ExpensesReport.Count > 0)
+        {
+            string recordsCount;
+            if (Model.ExpensesReport.Count == 1)
+            {
+                recordsCount = Model.ExpensesReport.Count + " record found";
+            }
+            else
+            {
+                recordsCount = Model.ExpensesReport.Count + " records found";
+            }
+            <p class="bg-primary text-white">
+                @recordsCount
+            </p>
+
+            <input asp-for="OrderByExpression" type="hidden" id="orderbyexpressioninput" />
+            <input asp-for="OrderByDirectionAscending" type="hidden" id="orderbydirectioninput" />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @{
+                                string collectiveDisplayName = Html.DisplayNameFor(model => model.ExpensesReport.FirstOrDefault().CollectiveName);
+                            }
+                            <a href="#" class="orderbyexpressionlink">@collectiveDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == collectiveDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                                }
+                            }
+
+                        </th>
+                        <th>
+                            @{
+                                string expenseDisplayName = Html.DisplayNameFor(model => model.ExpensesReport.FirstOrDefault().ExpenseDescription);
+                            }
+                            <a href="#" class="orderbyexpressionlink">@expenseDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == expenseDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                                }
+                            }
+
+                        </th>
+                        <th>
+                            @{
+                                string costDisplayName = Html.DisplayNameFor(model => model.ExpensesReport.FirstOrDefault().CostText);
+                            }
+                            <a href="#" class="orderbyexpressionlink">@costDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == costDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                                }
+                            }
+
+                        </th>
+                        <th>
+                            @{
+                                string pauDateDisplayName = Html.DisplayNameFor(model => model.ExpensesReport.FirstOrDefault().PayDateText);
+                            }
+                            <a href="#" class="orderbyexpressionlink">@pauDateDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == pauDateDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                                }
+                            }
+
+                        </th>
+                        <th>
+                            @{
+                                string userNameDisplayName = Html.DisplayNameFor(model => model.ExpensesReport.FirstOrDefault().UserName);
+                            }
+                            <a href="#" class="orderbyexpressionlink">@userNameDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == userNameDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>
+                                }
+                            }
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ExpensesReport)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CollectiveName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpenseDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CostText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayDateText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="bg-primary text-white">
+                No records found
+            </p>
+        }
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model ExpenseModel
+
+@{
+    ViewData["Title"] = "Add Expense";
+}
+<div style="padding-top:30px;">
+
+    <h3>@ViewData["Title"]</h3>
+    <hr />
+    <div class="row">        
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cost"></label>
+                    <input asp-for="Cost" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="ExpensesList" asp-controller="Collectives" asp-route-id="@ViewBag.CollectiveId">Back to Group</a>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,29 @@
+﻿@model CollectiveModel
+
+@{
+    ViewData["Title"] = "Add User";
+}
+<div style="padding-top:30px;">
+    <h1>@ViewData["Title"]</h1>
+
+
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <div class="form-group">
+                    <label>Select User</label>
+                    <select multiple="multiple" class="form-control" asp-items="@ViewBag.Users" name="UserIds"></select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">Save</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="ExpensesList" asp-route-id="@Model.Id">Back to Group</a>
+    </div>
+</div>

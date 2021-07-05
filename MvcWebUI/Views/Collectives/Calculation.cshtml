@@ -1,0 +1,59 @@
+﻿@model CollectiveModel
+
+@{
+    ViewData["Title"] = "Calculation";
+}
+
+
+<div style="padding-top:30px;">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Name) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.UserNamesHtml) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.UserNamesHtml)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.UserCount) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.UserCount)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TotalCost) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ExpensePerPerson) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ExpensePerPerson)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.PaidByUsers) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PaidByUsers)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MustPay) :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MustPay)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="ExpensesList" asp-route-id="@Model.Id">Back to Group</a> |
+    <a asp-controller="Expenses" asp-action="AllDelete" asp-route-id="@Model.Id">Delete Expenses</a>
+</div>
